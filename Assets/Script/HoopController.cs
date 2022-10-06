@@ -139,6 +139,7 @@ public class HoopController : MonoBehaviour
             {
                 AudioManager.Instance.Play("Pass"); 
             }
+            
         }
 
         SetStatusCollider(false);
