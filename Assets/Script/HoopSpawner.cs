@@ -129,6 +129,7 @@ public class HoopSpawner : MonoBehaviour
         currentHoop = GenerateHoop();
         currentHoop.GetComponent<HoopController>().NonCurrentHoop();
         SetTransform(currentHoop, 1.5f + cam.transform.position.x);
+        currentHoop.transform.position -= Vector3.up * (currentHoop.transform.position.y + 0.15f);
         nextHoop = GenerateHoop();
         nextHoop.GetComponent<HoopController>().NonCurrentHoop();
         SetTransform(nextHoop, currentHoop.transform.position.x + GameManager.Instance.HorizontalScreen);

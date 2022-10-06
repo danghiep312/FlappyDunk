@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public bool NewBestScore;
     public GameObject Ball;
     public AchievementManager Achievement;
-    public Camera cam;
+    public GameObject cam;
     public bool ClickSecondChance;
     [SerializeField] private GameObject notiSwish;
     
