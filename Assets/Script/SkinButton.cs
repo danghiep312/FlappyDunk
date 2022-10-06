@@ -42,6 +42,10 @@ public class SkinButton : MonoBehaviour
 
      public void ButtonPressed()
      {
+          if (!selected.activeSelf)
+          {
+               AudioManager.Instance.Play("Click");
+          }
           if (!isClicked && isUnlocked)
           {
                isClicked = true;

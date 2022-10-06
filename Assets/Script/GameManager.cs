@@ -255,7 +255,6 @@ public class GameManager : MonoBehaviour
         InHome = true;
         GameOver = false;
         IsPlaying = false;
-        Ball.transform.position = new Vector3(-1.5f + cam.transform.position.x, 0, 0);
         CanvasManager.Instance.GoHome();
         CanvasManager.Instance.ShowChallengePanel();
         bg.FadeInHome();

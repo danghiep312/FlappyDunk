@@ -87,6 +87,10 @@
 
     public void OnClickTabButton(GameObject tabButton)
     {
+        if (!tabButton.activeSelf)
+        {
+            AudioManager.Instance.Play("Click");
+        }
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);

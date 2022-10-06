@@ -31,6 +31,7 @@ public class ChallengeButton : MonoBehaviour
 
     public void ButtonPressed()
     {
+        AudioManager.Instance.Play("Click");
         if (!isClicked)
         {
             isClicked = true;

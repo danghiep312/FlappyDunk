@@ -67,7 +67,7 @@ public class CanvasManager : MonoBehaviour
         if (challengePanel.gameObject.activeSelf)
         {
             challengePanel.DOAnchorPos(Vector2.zero, 0.5f).SetUpdate(true);
-            homePanel.DOAnchorPos(Vector2.right * horizontal, 0.01f).SetUpdate(true);
+            homePanel.DOAnchorPos(Vector2.left * horizontal, 0.01f).SetUpdate(true);
         }
         else
         {
@@ -99,7 +99,7 @@ public class CanvasManager : MonoBehaviour
 
     public void PlayChallengeLevel()
     {
-        challengePanel.DOAnchorPos(Vector2.left * horizontal, 0.3f).SetUpdate(true);
+        challengePanel.DOAnchorPos(Vector2.up * vertical, 0.3f).SetUpdate(true);
         hudPanel.gameObject.SetActive(true);
         gameOverPanel.gameObject.SetActive(false);
     }
@@ -135,12 +135,12 @@ public class CanvasManager : MonoBehaviour
     
     public void GoToChallenge()
     {
-        challengePanel.DOAnchorPos(Vector2.left * horizontal, 0.01f).OnComplete(() =>
+        challengePanel.DOAnchorPos(Vector2.right * horizontal, 0.01f).OnComplete(() =>
         {
             challengePanel.DOAnchorPos(Vector3.zero, 0.3f);
         });
         challengePanel.gameObject.SetActive(true);
-        homePanel.DOAnchorPos(Vector2.right * horizontal, 0.31f, true).OnComplete(() =>
+        homePanel.DOAnchorPos(Vector2.left * horizontal, 0.31f, true).OnComplete(() =>
         {
             homePanel.gameObject.SetActive(false);
         });
@@ -160,7 +160,7 @@ public class CanvasManager : MonoBehaviour
 
         if (challengePanel.gameObject.activeSelf)
         {
-            challengePanel.DOAnchorPos(Vector2.left * horizontal, 0.3f, true).OnComplete(() =>
+            challengePanel.DOAnchorPos(Vector2.right * horizontal, 0.3f, true).OnComplete(() =>
             {
                 challengePanel.gameObject.SetActive(false);
             });
