@@ -85,6 +85,7 @@ public class AchievementManager : MonoBehaviour
 
     private void OnHoopPassed()
     {
+        if (GameManager.Instance.PlayChallenge) return;
         HoopPassedInEndlessMode++;
         HoopPassedInSinglePlay++;
     }

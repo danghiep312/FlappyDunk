@@ -91,6 +91,15 @@ public class BackgroundScroll : MonoBehaviour
 
     public void FadeOutWhenPlaying()
     {
+        if (PlayerPrefs.GetInt("BestScore") == 0)
+        {
+            foreach (var sr in offsetBgSprite)
+            {
+                sr.DOFade(0, 0.01f).SetUpdate(true);
+            }
+            return;
+        }
+        
         for (int i = 0; i < offsetBg.Length; i++)
         {
             offsetBgAnimtor[i].enabled = true;

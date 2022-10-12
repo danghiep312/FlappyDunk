@@ -17,10 +17,14 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private bool canJump;
     [SerializeField] private bool isNoticed;
 
+    public int totalHoop;
+    public int hoopPassed;
+    public int swish;
+
     private WaitForSecondsRealtime wait = new WaitForSecondsRealtime(0.15f);
+    
     private void Start()
     {
-        cam = GameObject.FindGameObjectWithTag("MainCamera").transform;
         hoopHolder = new GameObject[transform.childCount - 2];
         hoop = new HoopController[hoopHolder.Length];
         for (int i = 0; i < hoopHolder.Length; i++)
@@ -39,10 +43,26 @@ public class LevelManager : MonoBehaviour
         gameObject.SetActive(false);
         ball = GameObject.FindGameObjectWithTag("Player");
         ballController = ball.GetComponent<BallController>();
+        
+        this.RegisterListener(EventID.OnReachSwish, (param) => OnReachSwish());
+        this.RegisterListener(EventID.OnHoopPassed, (param) => OnHoopPassed());
+    }
+
+    private void OnHoopPassed()
+    {
+        hoopPassed++;
+    }
+
+    private void OnReachSwish()
+    {
+        swish++;
     }
 
     private void OnEnable()
     {
+        swish = 0;
+        hoopPassed = 0;
+        
         index = 0;
         isLevelComplete = false;
         isNoticed = false;
@@ -75,6 +95,7 @@ public class LevelManager : MonoBehaviour
     private void Update()
     {
         if (GameManager.Instance.GameOver) return;
+        
         if (hoop[index].IsPassed)
         {
             if (index < hoop.Length - 1)
@@ -83,9 +104,28 @@ public class LevelManager : MonoBehaviour
                 hoop[index].IsCurrentHoop();
             }
         }
+
+        if (gameObject.name.Contains("Level4"))
+        {
+            if (totalHoop - hoopPassed < 3 - swish)
+            {
+                GameManager.Instance.GameOver = true;
+            }
+        }
         
         if (ball.transform.position.x > finsihLine.position.x && !GameManager.Instance.GameOver)
         {
+            if (gameObject.name.Contains("Level7") || gameObject.name.Contains("Level8"))
+            {
+                if (swish != 6)
+                {
+                    GameManager.Instance.GameOver = true;
+                    GameManager.Instance.PlayTime++;
+                    return;
+                }
+            }
+            
+            
             GameManager.Instance.CanTap = false;
             if (!isNoticed)
             {
@@ -164,4 +204,6 @@ public class LevelManager : MonoBehaviour
             h.ChangeSprite(GameManager.Instance.HoopSprite);
         }
     }
+
+    
 }

@@ -31,6 +31,7 @@ public class CanvasManager : MonoBehaviour
     [SerializeField] private RectTransform challengePanel;
     [SerializeField] private RectTransform panelToStartChallenge;
     [SerializeField] private RectTransform shopPanel;
+    [SerializeField] private RectTransform tutorialPanel;
     [SerializeField] float vertical, horizontal;
 
     private void Start()
@@ -38,6 +39,18 @@ public class CanvasManager : MonoBehaviour
         var sizeDelta = gameOverPanel.sizeDelta;
         vertical = sizeDelta.y;
         horizontal = sizeDelta.x;
+    }
+
+    private void Update()
+    {
+        if (tutorialPanel.gameObject.activeSelf)
+        {
+            if (Time.timeScale != 0)
+            {
+                tutorialPanel.gameObject.SetActive(false);
+                hudPanel.gameObject.SetActive(true);
+            }
+        }
     }
 
     public void PauseGame()
@@ -89,6 +102,11 @@ public class CanvasManager : MonoBehaviour
         homePanel.DOAnchorPos(Vector2.right * horizontal, 0.3f).SetUpdate(true).OnComplete(() =>
         {
             homePanel.gameObject.SetActive(false);
+            if (PlayerPrefs.GetInt("BestScore") == 0)
+            {
+                tutorialPanel.gameObject.SetActive(true);   
+                hudPanel.gameObject.SetActive(false);
+            }
         });
     }
 

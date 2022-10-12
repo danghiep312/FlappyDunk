@@ -203,6 +203,7 @@ MonoBehaviour:
   abovePoint: {fileID: 7372851480809036319}
   isPassed: 0
   originalScale: {x: 0.563823, y: 0.3737479, z: 1}
+  ball: {fileID: 0}
 --- !u!95 &2305605191659022832
 Animator:
   serializedVersion: 3

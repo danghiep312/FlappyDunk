@@ -20,7 +20,14 @@ public class HoopV2Controller : MonoBehaviour
         hoopTransform.localPosition = Vector3.MoveTowards(hoopTransform.localPosition, target, speed * Time.deltaTime);
         if (hoopTransform.localPosition == target)
         {
-            target *= -1;
+            if (gameObject.name.Contains("extra"))
+            {
+                target = new Vector3(target.x, target.y * -1, target.z);
+            }
+            else
+            {
+                target *= -1;
+            }
         }
 
         if (hoopController.IsPassed)

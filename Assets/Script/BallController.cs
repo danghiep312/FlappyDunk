@@ -76,7 +76,7 @@ public class BallController : MonoBehaviour
             rb.gravityScale = 2f;
             if (ScoreManager.Instance.CurrentScore > 40)
             {
-                jumpForce = 8f;
+                forwardSpeed = 8f;
             }
         }
 
@@ -88,6 +88,17 @@ public class BallController : MonoBehaviour
         {
             forwardSpeed = 7f;
             rb.gravityScale = 2f;
+        }
+        
+        if (GameManager.Instance.IsPlayingLevel9())
+        {
+            rb.gravityScale = 1f;
+            forwardSpeed = 6.5f;
+        }
+        else
+        {
+            rb.gravityScale = 2f;
+            forwardSpeed = 7f;
         }
         
         if (Input.GetMouseButtonDown(0) && GameManager.Instance.CanTap && GameManager.Instance.IsPlaying && !GameManager.Instance.IsMouseOverUI())

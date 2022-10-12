@@ -42,6 +42,7 @@ public class HoopController : MonoBehaviour
         if (!IsPassed && transform.position.x < ball.transform.position.x - 2f)
         {
             GameManager.Instance.GameOver = true;
+            //Debug.Log("Di qua hoop");
         }
 
     }
@@ -147,10 +148,8 @@ public class HoopController : MonoBehaviour
         {
             ScoreManager.Instance.AddScore(ballController.Streak);
             
-            if (!GameManager.Instance.PlayChallenge)
-            {
-                this.PostEvent(EventID.OnHoopPassed);
-            }
+            this.PostEvent(EventID.OnHoopPassed);
+            
         }
 
         anim.enabled = true;

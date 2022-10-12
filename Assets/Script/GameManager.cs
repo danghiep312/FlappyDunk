@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public GameObject cam;
     public bool ClickSecondChance;
     [SerializeField] private GameObject notiSwish;
+    private WaitForSeconds waitForSeconds = new WaitForSeconds(0.5f);
     
     [Header("Status of the game")]
     public bool GameOver;
@@ -170,7 +171,7 @@ public class GameManager : MonoBehaviour
         PlayTime++;
         InHome = false;
         IsPlaying = true;
-        CanTap = true;
+        CanTap = false || PlayerPrefs.GetInt("BestScore") != 0;
         GameOver = false;
         CanvasManager.Instance.PlayGame();
         Ball.GetComponent<BallController>().Respawn();
@@ -184,11 +185,17 @@ public class GameManager : MonoBehaviour
         {
             level.SetActive(false);
         }
+        
     }
     
     public void PlayGameChallenge(GameObject levelPrefab)
     {
         if (!CanTap) return;
+        InHome = false;
+        IsPlaying = true;
+        CanTap = true;
+        PlayChallenge = true;
+        GameOver = false;
         Ball.GetComponent<BallController>().OffSpriteSwish();
         c = 0;
         ClickSecondChance = false;
@@ -213,15 +220,15 @@ public class GameManager : MonoBehaviour
         }
         Time.timeScale = 0;
         PlayTime++;
-        InHome = false;
-        IsPlaying = true;
-        CanTap = true;
-        PlayChallenge = true;
+        if (LevelsHolder[3].activeSelf)
+        {
+            PlayTime++;
+        }
     }
 
     public void GoHome()
     {
-        
+        StartCoroutine(AfterGoHome());
         CanTap = false;
         if (PlayChallenge)
         {
@@ -317,6 +324,11 @@ public class GameManager : MonoBehaviour
         return LevelsHolder.Any(l => l.gameObject.name.Contains("Level3") && l.activeSelf);
     }
 
+    public bool IsPlayingLevel9()
+    {
+        return LevelsHolder.Any(l => l.gameObject.name.Contains("Level9") && l.activeSelf);
+    }
+
     public void TrySkin()
     {
         PlayGame();
@@ -361,5 +373,9 @@ public class GameManager : MonoBehaviour
         tmp.startColor = new Color(c.r, c.g, c.b, 1);       
     }
 
-    
+    IEnumerator AfterGoHome()
+    {
+        yield return waitForSeconds;
+        Ball.transform.position = new Vector3(-1.5f + cam.transform.position.x, 0, 0);
+    }
 }
